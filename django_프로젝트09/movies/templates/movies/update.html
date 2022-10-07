@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="POST">
+      <!-- POST 요청에서 CSRF 공격 방어 : 전송된 token의 유효성 검증 -->
+      {% csrf_token %}
+      <!-- Bootstrap 적용 ModleForm -->
+      {% bootstrap_form movie_form %}
+      <input class="btn btn-primary" type="submit" value="글 수정">
+    </form>
+  </div>
+{% endblock %}

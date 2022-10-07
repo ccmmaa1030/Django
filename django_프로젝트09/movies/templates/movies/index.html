@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container">
+    <!-- 영화 목록 -->
+    <div class="p-3 pt-5 d-flex flex-column align-items-center">
+      <h1 class="m-0 p-3 text-center">영화 게시판</h1>
+      <div class="mb-3 d-flex w-100 justify-content-end">
+        <a class="btn btn-primary" href="{% url 'movies:create' %}">글 쓰기</a>
+      </div>
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">번호</th>
+            <th scope="col" class="text-center">제목</th>
+            <th scope="col" class="text-center">장르</th>
+            <th scope="col" class="text-center">러닝타임</th>
+            <th scope="col" class="text-center">수정</th>
+            <th scope="col" class="text-center">삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for movie in movies %}
+            <tr>
+              <td class="text-center">{{ movie.pk }}</td>
+              <td class="text-center">
+                <a href="{% url 'movies:detail' movie.pk %}">{{ movie.title }}</a>
+              </td>
+              <td class="text-center">{{ movie.genre }}</td>
+              <td class="text-center">{{ movie.running_time }}분</td>
+              <!-- 수정 -->
+              <td class="text-center">
+                <a class="btn btn-primary btn-sm" href="{% url 'movies:update' movie.pk %}">수정</a>
+              </td>
+              <!-- 삭제 -->
+              <td class="text-center">
+                <a class="btn btn-danger btn-sm" href="{% url 'movies:delete' movie.pk %}">삭제</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
