@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container">
+    <h1>회원가입</h1>
+    <form action="" method="POST">
+      <!-- POST 요청에서 CSRF 공격 방어 : 전송된 token의 유효성 검증 -->
+      {% csrf_token %}
+      <!-- Bootstrap 적용 ModleForm -->
+      {% bootstrap_form form %}
+      <input class="btn btn-primary" type="submit" value="회원가입">
+    </form>
+  </div>
+{% endblock %}

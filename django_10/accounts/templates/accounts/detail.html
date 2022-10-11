@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container">
+    <div class="p-3 pt-5 d-flex flex-column align-items-center">
+      <h1 class="m-0 p-3 fw-bold display-5 text-center">{{ user.username }}님의 프로필</h1>
+      <dl class="row">
+        <dt class="col-sm-2 text-center">이름</dt>
+        <dd class="col-sm-10">{{ user.username }}</dd>
+        <dt class="col-sm-2 text-center">이메일</dt>
+        <dd class="col-sm-10">{{ user.email }}</dd>
+        <dt class="col-sm-2 text-center">가입일</dt>
+        <dd class="col-sm-10">{{ user.date_joined }}</dd>
+      </dl>
+    </div>
+  </div>
+{% endblock %}

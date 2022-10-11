@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container">
+    <div class="p-3 pt-5 d-flex flex-column align-items-center">
+      <a class="btn btn-primary w-25 my-1" href="{% url 'accounts:signup' %}">회원가입</a>
+      <a class="btn btn-primary w-25 my-1" href="{% url 'accounts:index' %}">회원목록</a>
+      <a class="btn btn-primary w-25 my-1" href="{% url 'movies:index' %}">영화목록</a>
+    </div>
+  </div>
+{% endblock %}
