@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="container">
+    <div class="p-3 pt-5">
+      <h1 class="m-0 p-3 text-center">영화정보 수정</h1>
+      <form action="" method="POST">
+        <!-- POST 요청에서 CSRF 공격 방어 : 전송된 token의 유효성 검증 -->
+        {% csrf_token %}
+        <!-- Bootstrap 적용 ModleForm -->
+        {% bootstrap_form movie_form %}
+        <input class="btn btn-primary" type="submit" value="글 수정">
+      </form>
+    </div>
+  </div>
+{% endblock %}
