@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  {% include 'header.html' %}
+  <div class="container">
+    <div class="p-3 pt-5 d-flex flex-column align-items-center">
+      <h1 class="m-0 p-3 text-center">회원 목록</h1>
+      <div class="mb-3 d-flex w-100 justify-content-end">
+        <a class="btn btn-dark" href="{% url 'accounts:signup' %}">회원가입</a>
+      </div>
+      <table class="table align-middle text-center table-borderless">
+        <thead class="bg-dark text-light">
+          <tr>
+            <th scope="col" class="text-center">번호</th>
+            <th scope="col" class="text-center">이름</th>
+            <th scope="col" class="text-center">가입일</th>
+          </tr>
+        </thead>
+        <tbody class="bg-light">
+          {% for user in users %}
+            <tr>
+              <td class="text-center">{{ user.pk }}</td>
+              <td class="text-center">
+                <a class="text-dark" href="{% url 'accounts:detail' user.pk %}">{{ user.username }}</a>
+              </td>
+              <td class="text-center">{{ user.date_joined }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include 'footer.html' %}
+{% endblock %}

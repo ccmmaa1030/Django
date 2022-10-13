@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="container">
+    <div class="box">
+      <h1 class="">
+        {{ user }}
+        님의 프로필</h1>
+      <dl class="row">
+        <dt class="col-sm-2 text-center">이름</dt>
+        <dd class="col-sm-10">{{ user.username }}</dd>
+        <dt class="col-sm-2 text-center">가입일</dt>
+        <dd class="col-sm-10">{{ user.date_joined }}</dd>
+        <dt class="col-sm-2 text-center">이메일</dt>
+        <dd class="col-sm-10">{{ user.email }}</dd>
+        <dt class="col-sm-2 text-center">성</dt>
+        <dd class="col-sm-10">{{ user.last_name }}</dd>
+        <dt class="col-sm-2 text-center">이름</dt>
+        <dd class="col-sm-10">{{ user.first_name }}</dd>
+      </dl>
+      {% if request.user.is_authenticated %}
+        <a class="red" href="{% url 'accounts:logout' %}">Logout</a>
+        <a class="yellow" href="{% url 'accounts:update' %}">Update</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
