@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="card shadow">
+    <div class="card-header bg-dark">
+      <h1 class="text-light">
+        <i class="bi bi-brightness-high"></i>
+        Welcome
+      </h1>
+    </div>
+    <div class="card-body box">
+      <a class="red click" href="{% url 'accounts:login' %}">Login</a>
+      <a class="yellow click" href="{% url 'accounts:signup' %}">Signup</a>
+      <a class="green click" href="{% url 'accounts:index' %}">Member</a>
+      <a class="blue click" href="{% url 'reviews:index' %}">Home</a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  {% include 'header.html' %}
+  <div class="card shadow w-50">
+    <div class="card-header bg-dark">
+      <h1 class="text-light">
+        <i class="bi bi-person-badge"></i>
+        {{ user }}
+        Profile
+      </h1>
+    </div>
+    <div class="card-body box">
+      <dl class="row">
+        <dt class="col-sm-3 text-center">username</dt>
+        <dd class="col-sm-9">{{ user.username }}</dd>
+        <dt class="col-sm-3 text-center">date_joined</dt>
+        <dd class="col-sm-9">{{ user.date_joined }}</dd>
+        <dt class="col-sm-3 text-center">email</dt>
+        <dd class="col-sm-9">{{ user.email }}</dd>
+        <dt class="col-sm-3 text-center">last_name</dt>
+        <dd class="col-sm-9">{{ user.last_name }}</dd>
+        <dt class="col-sm-3 text-center">first_name</dt>
+        <dd class="col-sm-9">{{ user.first_name }}</dd>
+      </dl>
+    </div>
+    <div class="card-footer left">
+      {% if request.user.is_authenticated %}
+        <a class="red click" href="{% url 'accounts:logout' %}">Logout</a>
+        <a class="yellow click" href="{% url 'accounts:update' %}">Update</a>
+        <a class="green click" href="{% url 'accounts:index' %}">Member</a>
+        <a class="blue click" href="{% url 'reviews:index' %}">Home</a>
+      {% else %}
+        <a class="red click" href="{% url 'accounts:index' %}">Member</a>
+        <a class="yellow click" href="{% url 'reviews:index' %}">Home</a>
+      {% endif %}
+    </div>
+  </div>
+  {% include 'footer.html' %}
+{% endblock %}

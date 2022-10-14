@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="card shadow w-50">
+    <div class="card-header bg-dark">
+      <h1 class="text-light">
+        <i class="bi bi-check-square"></i>
+        Signup
+      </h1>
+    </div>
+    <div class="card-body box">
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="left">
+          <input class="btn yellow click" type="submit" value="OK">
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

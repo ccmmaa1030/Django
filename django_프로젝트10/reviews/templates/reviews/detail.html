@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  {% include 'header.html' %}
+  <div class="card shadow w-50">
+    <div class="card-header bg-dark">
+      <h1 class="text-light">
+        <i class="bi bi-card-list"></i>
+        {{ review.title }}
+      </h1>
+    </div>
+    <div class="card-body box">
+      <dl class="row">
+        <dt class="col-sm-3 text-center">movie</dt>
+        <dd class="col-sm-9">{{ review.title }}</dd>
+        <dt class="col-sm-3 text-center">grade</dt>
+        <dd class="col-sm-9">
+          {{ review.get_grade_display }}
+          {{ review.grade }}
+        </dd>
+        <dt class="col-sm-3 text-center">review</dt>
+        <dd class="col-sm-9">{{ review.content }}</dd>
+        <dt class="col-sm-3 text-center">created_at</dt>
+        <dd class="col-sm-9">{{ review.created_at | date:"Y-m-d" }}</dd>
+        <dt class="col-sm-3 text-center">updated_at</dt>
+        <dd class="col-sm-9">{{ review.updated_at | date:"Y-m-d" }}</dd>
+      </dl>
+    </div>
+    <div class="card-footer left">
+      {% if request.user.is_authenticated %}
+        <a class="red click" href="{% url 'reviews:update' review.pk %}">Edit</a>
+        <a class="yellow click" href="{% url 'reviews:delete' review.pk %}">Delete</a>
+        <a class="green click" href="{% url 'reviews:index' %}">Home</a>
+      {% else %}
+        <a class="red click" href="{% url 'reviews:index' %}">Home</a>
+      {% endif %}
+    </div>
+  </div>
+  {% include 'footer.html' %}
+{% endblock %}
