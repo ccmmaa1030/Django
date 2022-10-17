@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box w-100 m-3 p-5">
+    <h1 class="text-center">
+      <i class="bi bi-card-list"></i>
+      게시판
+    </h1>
+    <div class="card-footer left my-2">
+      <a class="red click" href="{% url 'articles:create' %}">글 작성</a>
+    </div>
+    <div class="row">
+      {% for article in articles %}
+        <div class="col-4">
+          <div class="card">
+            <img src="{{ article.image.url }}" class="card-img-top" alt="thumbnail">
+            <div class="card-body">
+              <a class="text-dark fs-4 fw-bold mx-0" href="{% url 'articles:detail' article.pk %}">
+                {{ article.pk }}번 :
+                {{ article.title }}</a>
+              <p>{{ article.created_at | date:"Y-m-d" }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

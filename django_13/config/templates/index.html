@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="card shadow">
+    <div class="card-header bg-dark">
+      <h1 class="text-light">
+        <i class="bi bi-brightness-high"></i>
+        Welcome
+      </h1>
+    </div>
+    <div class="card-body box">
+      <a class="red click" href="{% url 'articles:index' %}">메인 페이지</a>
+      <a class="blue click" href="{% url 'articles:create' %}">글 작성하기</a>
+    </div>
+  </div>
+{% endblock %}

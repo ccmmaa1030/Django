@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="card shadow w-50">
+    <div class="card-header bg-dark">
+      <h1 class="text-light">
+        <i class="bi bi-card-list"></i>
+        {{ article.pk }}번 게시글
+      </h1>
+    </div>
+    <div class="card-body box">
+      <dl class="row">
+        <img src="{{ article.image.url }}" alt="{{ article.image }}">
+        <dt class=" col-sm-3 text-center">제목</dt>
+        <dd class="col-sm-9">{{ article.title }}</dd>
+        <dt class="col-sm-3 text-center">내용</dt>
+        <dd class="col-sm-9">{{ article.content }}</dd>
+        <dt class="col-sm-3 text-center">작성일</dt>
+        <dd class="col-sm-9">{{ article.created_at | date:"Y-m-d" }}</dd>
+        <dt class="col-sm-3 text-center">수정일</dt>
+        <dd class="col-sm-9">{{ article.updated_at | date:"Y-m-d" }}</dd>
+      </dl>
+    </div>
+    <div class="card-footer left">
+      <a class="red click mx-2" href="{% url 'articles:update' article.pk %}">글 수정</a>
+      <a class="blue click" href="{% url 'articles:delete' article.pk %}">글 삭제</a>
+    </div>
+  </div>
+{% endblock %}
