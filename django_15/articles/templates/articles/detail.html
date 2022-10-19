@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="d-flex flex-column align-items-center mt-5 pt-5">
+    <div class="card shadow w-75">
+      <div class="card-header bg-dark">
+        <h1 class="text-light">
+          <i class="bi bi-card-list"></i>
+          {{ article.pk }}번 게시글
+        </h1>
+      </div>
+      <div class="card-body box">
+        <dl class="row">
+          <img class="mb-4" src="{{ article.image.url }}" alt="{{ article.image }}">
+          <dt class=" col-sm-3 text-center">제목</dt>
+          <dd class="col-sm-9">{{ article.title }}</dd>
+          <dt class=" col-sm-3 text-center">작성자</dt>
+          <dd class="col-sm-9">
+            <a class="text-black" href="{% url 'accounts:detail' article.user.pk %}">
+              {{ article.user.username }}
+            </a>
+          </dd>
+          <dt class="col-sm-3 text-center">내용</dt>
+          <dd class="col-sm-9">{{ article.content }}</dd>
+          <dt class="col-sm-3 text-center">작성일</dt>
+          <dd class="col-sm-9">{{ article.created_at | date:"Y-m-d" }}</dd>
+          <dt class="col-sm-3 text-center">수정일</dt>
+          <dd class="col-sm-9">{{ article.updated_at | date:"Y-m-d" }}</dd>
+        </dl>
+      </div>
+      <div class="card-footer left">
+        {% if request.user.is_authenticated %}
+          {% if request.user == article.user %}
+            <a class="btn blue click mx-2" href="{% url 'articles:update' article.pk %}">글 수정</a>
+            <a class="btn red click" href="{% url 'articles:delete' article.pk %}">글 삭제</a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <hr>
+    <form class="w-75" action="{% url 'articles:comment_create' article.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <div class="left">
+        <input class="btn blue click" type="submit" value="OK">
+      </div>
+    </form>
+    <hr>
+    {% for comment in comments %}
+      <p>{{ comments|length }}개의 댓글이 있습니다.</p>
+      <div class="card w-75 my-1">
+        <div class="card-body row p-1">
+          <div class="col-2 py-1">
+            <p class="my-1 mx-3">{{ comment.user.username }}</p>
+          </div>
+          <div class="col-8 py-1">
+            <p class="my-1 mx-3">{{ comment.content }}</p>
+          </div>
+          <div class="col-2 py-1">
+            <a class="btn btn-sm red click" href="{% url 'articles:comment_delete' article.pk comment.pk %}">댓글 삭제</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p>댓글이 없습니다.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

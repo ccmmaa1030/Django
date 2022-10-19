@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="card shadow w-50">
+    <div class="card-header bg-dark">
+      <h1 class="text-light">
+        <i class="bi bi-pencil-fill"></i>
+        {% if request.resolver_match.url_name == 'create' %}
+          글 작성
+        {% else %}
+          글 수정
+        {% endif %}
+      </h1>
+    </div>
+    <div class="card-body box">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form article_form %}
+        <div class="left">
+          <input class="btn blue click" type="submit" value="OK">
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

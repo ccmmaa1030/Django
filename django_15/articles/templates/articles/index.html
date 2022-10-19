@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box w-100 m-3 p-5">
+    <h1 class="text-center">
+      <i class="bi bi-card-list"></i>
+      게시판
+    </h1>
+    <div class="left my-2">
+      {% if request.user.is_authenticated %}
+        <a class="btn red click" href="{% url 'accounts:logout' %}">로그아웃</a>
+        <a class="btn blue click" href="{% url 'articles:create' %}">글 작성</a>
+      {% else %}
+        <a class="btn yellow click" href="{% url 'accounts:signup' %}">회원가입</a>
+        <a class="btn green click" href="{% url 'accounts:login' %}">로그인</a>
+      {% endif %}
+    </div>
+    <div class="row">
+      {% for article in articles %}
+        <div class="col-4">
+          <div class="card">
+            <img src="{{ article.image.url }}" class="card-img-top" alt="thumbnail">
+            <div class="card-body">
+              <a class="text-dark fs-4 fw-bold mx-0" href="{% url 'articles:detail' article.pk %}">
+                {{ article.pk }}번 :
+                {{ article.title }}
+              </a>
+              <p class="m-0 w-100 text-end">
+                <a href="{% url 'accounts:detail' article.user.pk %}">
+                  {{ article.user.username }}
+                </a>
+                |
+                {{ article.created_at | date:"Y-m-d" }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
