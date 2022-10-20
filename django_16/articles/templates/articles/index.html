@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box w-100 m-3 p-5">
+    <h1 class="display-2 text-warning txt-shadow">ARTICLES</h1>
+    <div class="w-100 left px-3">
+      {% if request.user.is_authenticated %}
+        <a class="red click rounded-pill m-1 px-3" href="{% url 'accounts:logout' %}">LOGOUT</a>
+        <a class="green click rounded-pill m-1 px-3" href="{% url 'articles:create' %}">NEW ARTICLE</a>
+      {% else %}
+        <a class="green click rounded-pill my-1 px-3" href="{% url 'accounts:signup' %}">SIGNUP</a>
+        <a class="blue click rounded-pill my-1 px-3" href="{% url 'accounts:login' %}">LOGIN</a>
+      {% endif %}
+    </div>
+    <div class="row w-100">
+      {% for article in articles %}
+        <div class="col-4">
+          <div class="box yellow shadow rounded-4 position-relative">
+            <div class="position-absolute top-0 start-50 translate-middle">
+              <h1 class="display-4 text-warning txt-shadow">NO.{{ article.pk }}</h1>
+            </div>
+            <div class="box w-100 pt-4 pb-3 px-3">
+              <img src="{{ article.image.url }}" class="card-img-top" alt="...">
+              <a class="text-dark fs-4 fw-bold mx-0" href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
+              <p class="m-0 w-100 text-end">
+                <a href="{% url 'accounts:detail' article.user.pk %}">
+                  {{ article.user.username }}
+                </a>
+                |
+                {{ article.created_at | date:"Y-m-d" }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

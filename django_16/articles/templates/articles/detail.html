@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box yellow shadow rounded-4 w-75 position-relative">
+    <div class="position-absolute top-0 start-50 translate-middle">
+      <h1 class="display-2 text-warning txt-shadow">NO.{{ article.pk }}</h1>
+    </div>
+    <div class="box w-100 pt-5 pb-3 px-3">
+      <dl class="row">
+        <img class="mb-4" src="{{ article.image.url }}" alt="{{ article.image }}">
+        <dt class=" col-sm-3 text-center">title</dt>
+        <dd class="col-sm-9">{{ article.title }}</dd>
+        <dt class=" col-sm-3 text-center">username</dt>
+        <dd class="col-sm-9">
+          <a class="text-black" href="{% url 'accounts:detail' article.user.pk %}">
+            {{ article.user.username }}
+          </a>
+        </dd>
+        <dt class="col-sm-3 text-center">content</dt>
+        <dd class="col-sm-9">{{ article.content }}</dd>
+        <dt class="col-sm-3 text-center">created_at</dt>
+        <dd class="col-sm-9">{{ article.created_at | date:"Y-m-d" }}</dd>
+        <dt class="col-sm-3 text-center">updated_at</dt>
+        <dd class="col-sm-9">{{ article.updated_at | date:"Y-m-d" }}</dd>
+      </dl>
+    </div>
+    <div class="w-100 left px-3">
+      {% if request.user.is_authenticated %}
+        {% if request.user == article.user %}
+          <a class="red click rounded-pill m-1 px-3" href="{% url 'articles:update' article.pk %}">UPDATE</a>
+          <a class="green click rounded-pill m-1 px-3" href="{% url 'articles:delete' article.pk %}">DELETE</a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

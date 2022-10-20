@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box yellow shadow rounded-4 w-50 position-relative">
+    <div class="position-absolute top-0 start-50 translate-middle">
+      <h1 class="display-2 text-warning txt-shadow">START</h1>
+    </div>
+    <div class="box w-50 pt-5 pb-3">
+      <a class="red click rounded-pill w-100 my-1" href="{% url 'articles:index' %}">HOME</a>
+      <a class="green click rounded-pill w-100 my-1" href="{% url 'accounts:signup' %}">SIGNUP</a>
+      <a class="blue click rounded-pill w-100 my-1" href="{% url 'accounts:login' %}">LOGIN</a>
+    </div>
+  </div>
+{% endblock %}
