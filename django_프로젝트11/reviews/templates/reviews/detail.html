@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box w-100">
+    <div class="box yellow shadow rounded-4 w-75 position-relative">
+      <div class="position-absolute top-0 start-50 translate-middle">
+        <h1 class="display-2 text-warning txt-shadow">NO.{{ review.pk }}</h1>
+      </div>
+      <div class="box w-100 pt-5 pb-3 px-3">
+        <div class="row">
+          <div class="col-5">
+            <img class="w-100" src="{{ review.image.url }}" alt="{{ review.image }}">
+          </div>
+          <div class="col-7 d-flex align-items-center">
+            <dl class="row">
+              <dt class=" col-sm-3 text-center">title</dt>
+              <dd class="col-sm-9">{{ review.title }}</dd>
+              <dt class=" col-sm-3 text-center">movie_name</dt>
+              <dd class="col-sm-9">{{ review.movie_name }}</dd>
+              <dt class=" col-sm-3 text-center">grade</dt>
+              <dd class="col-sm-9">
+                {{ review.get_grade_display }}
+                {{ review.grade }}
+              </dd>
+              <dt class="col-sm-3 text-center">content</dt>
+              <dd class="col-sm-9">{{ review.content }}</dd>
+              <dt class=" col-sm-3 text-center">username</dt>
+              <dd class="col-sm-9">
+                <a class="text-black" href="{% url 'accounts:detail' review.user.pk %}">
+                  {{ review.user.username }}
+                </a>
+              </dd>
+              <dt class="col-sm-3 text-center">created_at</dt>
+              <dd class="col-sm-9">{{ review.created_at | date:"Y-m-d" }}</dd>
+              <dt class="col-sm-3 text-center">updated_at</dt>
+              <dd class="col-sm-9">{{ review.updated_at | date:"Y-m-d" }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="w-100 left px-3">
+        {% if request.user.is_authenticated %}
+          {% if request.user == review.user %}
+            <a class="blue click rounded-pill m-1 px-3" href="{% url 'reviews:update' review.pk %}">UPDATE</a>
+            <a class="red click rounded-pill m-1 px-3" href="{% url 'reviews:delete' review.pk %}">DELETE</a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <hr>
+    <form class="w-75" action="{% url 'reviews:comment_create' review.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <div class="left">
+        <input class="green click rounded-pill my-1 px-3" type="submit" value="OK">
+      </div>
+    </form>
+    <hr>
+    <p class="text-muted text-center">
+      {{ comments|length }}
+      COMMENTS
+    </p>
+    {% for comment in comments %}
+      <div class="yellow shadow rounded-4 w-75 my-1">
+        <div class="row p-1 w-100">
+          <div class="col-2 py-2">
+            <p class="my-1 mx-3">{{ comment.user.username }}</p>
+          </div>
+          <div class="col-9 py-2">
+            <p class="my-1 mx-3">{{ comment.content }}</p>
+          </div>
+          {% if request.user.is_authenticated %}
+            {% if request.user == comment.user %}
+              <div class="col-1 py-1 left">
+                <a class="red click rounded-pill px-3" href="{% url 'reviews:comment_delete' review.pk comment.pk %}">DELETE</a>
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted text-center">0 COMMENTS</p>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box w-100">
+    <div class="box yellow shadow rounded-4 w-75 position-relative">
+      <div class="position-absolute top-0 start-50 translate-middle">
+        <h1 class="display-2 text-warning txt-shadow">{{ user }}'S INFO</h1>
+      </div>
+      <div class="box w-100 pt-5 pb-3 px-3">
+        <dl class="row">
+          <dt class="col-sm-3 text-center">username</dt>
+          <dd class="col-sm-9">{{ user.username }}</dd>
+          <dt class="col-sm-3 text-center">date_joined</dt>
+          <dd class="col-sm-9">{{ user.date_joined }}</dd>
+          <dt class="col-sm-3 text-center">email</dt>
+          <dd class="col-sm-9">{{ user.email }}</dd>
+          <dt class="col-sm-3 text-center">last_name</dt>
+          <dd class="col-sm-9">{{ user.last_name }}</dd>
+          <dt class="col-sm-3 text-center">first_name</dt>
+          <dd class="col-sm-9">{{ user.first_name }}</dd>
+        </dl>
+      </div>
+      <div class="w-100 left px-3">
+        {% if request.user.is_authenticated %}
+          <a class="red click rounded-pill m-1 px-3" href="{% url 'accounts:logout' %}">LOGOUT</a>
+        {% else %}
+          <a class="green click rounded-pill m-1 px-3" href="{% url 'accounts:login' %}">LOGIN</a>
+        {% endif %}
+        <a class="blue click rounded-pill m-1 px-3" href="{% url 'reviews:index' %}">HOME</a>
+      </div>
+    </div>
+    <hr>
+    <div class="row w-75">
+      <div class="col-6">
+        <p class="text-muted text-center">
+          {{ user.review_set.count }}
+          REVIEWS
+        </p>
+        {% for review in user.review_set.all %}
+          <div class="yellow shadow rounded-4 w-100 my-1">
+            <div class="row p-1 w-100">
+              <div class="col-2 py-1">
+                <p class="my-1 mx-3">{{ review.pk }}</p>
+              </div>
+              <div class="col-10 py-2">
+                <a class="text-dark my-1" href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col-6">
+        <p class="text-muted text-center">
+          {{ user.comment_set.count }}
+          COMMENTS
+        </p>
+        {% for comment in user.comment_set.all %}
+          <div class="yellow shadow rounded-4 w-100 my-1">
+            <div class="row p-1 w-100">
+              <div class="col-2 py-1">
+                <p class="my-1 mx-3">{{ forloop.counter }}</p>
+              </div>
+              <div class="col-10 py-2">
+                <a class="text-dark my-1" href="{% url 'reviews:detail' comment.review.pk %}">{{ comment.content }}</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
