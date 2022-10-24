@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="box yellow shadow rounded-4 w-50 position-relative">
+    <div class="position-absolute top-0 start-50 translate-middle">
+      <h1 class="display-2 text-warning txt-shadow">SIGNUP</h1>
+    </div>
+    <div class="box w-100 pt-5 pb-3 px-3">
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="left">
+          <input class="green click rounded-pill my-1 px-3" type="submit" value="OK">
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
