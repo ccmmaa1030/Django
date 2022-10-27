@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+* {
+  font-family: 'Jua', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #FEDFB0;
+}
+
+a {
+  text-decoration: none !important;
+  color: #403E39;
+}
+
+a:hover {
+  text-decoration: none !important;
+  color: #403E39;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.min-box {
+  min-width: 330px;
+  padding: 15px;
+}
+
+.bd {
+  border-style: solid;
+  border-color: #403E39;
+  border-width: 3px;
+}
+
+.bd-body {
+  border-top: solid #403E39;
+  border-bottom: solid #403E39;
+  border-width: 3px;
+}
+
+.min-btn {
+  min-width: 100px;
+  margin: 3px;
+}
+
+.color-1 {
+  background-color: #FAE0D9;
+}
+
+.color-2 {
+  background-color: #FAB4AA;
+}
+
+.color-3 {
+  background-color: #F89389;
+}
+
+.color-4 {
+  background-color: #DC6C61;
+}
+
+.color-5 {
+  background-color: #FEDFB0;
+}
