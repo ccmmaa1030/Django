@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="min-box m-auto">
+    <div class="card text-center bd">
+      <div class="card-header color-3"></div>
+      <div class="card-body bd-body">
+        <h3 class="card-title">
+          {% if request.resolver_match.url_name == 'create' %}
+            New Review
+          {% else %}
+            Edit Review
+          {% endif %}
+        </h3>
+        <form action="" method="POST" enctype="multipart/form-data" class="mt-3">
+          {% csrf_token %}
+          {% bootstrap_form review_form %}
+          <input class="btn min-btn color-2 bd" type="submit" value="Enter">
+        </form>
+      </div>
+      <div class="card-footer color-3"></div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <main class="container bg-white bd p-0">
+    {% include 'header.html' %}
+    <div class="p-4 p-md-5 m-4 rounded color-1 bd">
+      <div class="col-md-6 px-0">
+        <h2>Happy Dessert Time</h2>
+        <p class="my-3">What did you eat today?</p>
+        <a href="{% url 'reviews:create' %}" class="btn min-btn color-2 bd">
+          <i class="bi bi-arrow-through-heart"></i>
+          Sharing Today's Desserts...
+        </a>
+      </div>
+    </div>
+    <div class="row py-4 py-md-5 m-4">
+      {% for review in reviews %}
+        <div class="col-md-6 p-0">
+          <div class="card bd" style="min-height: 100px;">
+            <div class="row">
+              <div class="col-md-5">
+                <img src="{{ review.image.url }}" class="img-fluid rounded-start" alt="thumbnail">
+              </div>
+              <div class="col-md-7 my-auto">
+                <div class="card-body">
+                  <p class="card-text mb-2">{{ review.cafe_name }}</p>
+                  <a class="card-title fw-bold" href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+                  <p class="card-text">
+                    <small class="text-muted">
+                      <a href="{% url 'accounts:detail' review.user.pk %}">
+                        {{ review.user.username }}
+                      </a>
+                      |
+                      {{ review.get_grade_display }}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}

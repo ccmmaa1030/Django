@@ -45,6 +45,11 @@ a:hover {
   border-width: 3px;
 }
 
+.bd-bottom {
+  border-bottom: solid #403E39;
+  border-width: 3px;
+}
+
 .min-btn {
   min-width: 100px;
   margin: 3px;

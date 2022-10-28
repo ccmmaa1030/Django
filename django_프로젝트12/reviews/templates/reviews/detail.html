@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <main class="container bg-white bd p-0">
+    {% include 'header.html' %}
+    <div class="box p-4 p-md-5 m-4 mb-0">
+      <h1 class="text-center">
+        No.{{ review.pk }}
+        :
+        {{ review.title }}
+      </h1>
+      <h5 class="w-100 text-end">
+        <a href="{% url 'accounts:detail' review.user.pk %}">
+          {{ review.user.username }}
+        </a>
+      </h5>
+      <div class="w-100">
+        <div class="row">
+          <div class="col-5">
+            <img class="w-100 rounded bd" src="{{ review.image.url }}" alt="{{ review.image }}">
+          </div>
+          <div class="col-7 my-auto">
+            <dl class="row">
+              <dt class=" col-sm-3 text-center">title</dt>
+              <dd class="col-sm-9">{{ review.title }}</dd>
+              <dt class=" col-sm-3 text-center">cafe_name</dt>
+              <dd class="col-sm-9">{{ review.cafe_name }}</dd>
+              <dt class=" col-sm-3 text-center">grade</dt>
+              <dd class="col-sm-9">
+                {{ review.get_grade_display }}
+                {{ review.grade }}
+              </dd>
+              <dt class="col-sm-3 text-center">content</dt>
+              <dd class="col-sm-9">{{ review.content }}</dd>
+              <dt class=" col-sm-3 text-center">username</dt>
+              <dd class="col-sm-9">{{ review.user.username }}</dd>
+              <dt class="col-sm-3 text-center">created_at</dt>
+              <dd class="col-sm-9">{{ review.created_at | date:"Y-m-d" }}</dd>
+              <dt class="col-sm-3 text-center">updated_at</dt>
+              <dd class="col-sm-9">{{ review.updated_at | date:"Y-m-d" }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="w-100 d-flex justify-content-end">
+        {% if request.user.is_authenticated %}
+          <p class="fs-3 lh-2 m-1 px-3">
+            <a href="{% url 'reviews:like' review.pk %}">
+              {% if request.user in review.like_users.all %}
+                <i class="bi bi-heart-fill text-danger"></i>
+              {% else %}
+                <i class="bi bi-heart text-danger"></i>
+              {% endif %}
+            </a>
+            {{ review.like_users.count }}
+          </p>
+          {% if request.user == review.user %}
+            <a class="btn btn-sm min-btn color-1 bd m-1 px-3" href="{% url 'reviews:update' review.pk %}">Edit</a>
+            <a class="btn btn-sm min-btn color-2 bd m-1 px-3" href="{% url 'reviews:delete' review.pk %}">Delete</a>
+          {% endif %}
+        {% else %}
+          <p class="fs-3 lh-2 m-1 px-3">
+            <i class="bi bi-heart-fill text-danger"></i>
+            {{ review.like_users.count }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="box px-4 px-md-5 m-4 mt-0">
+      <form class="w-100" action="{% url 'reviews:comment_create' review.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form comment_form %}
+        <div class="w-100 d-flex justify-content-end">
+          <input class="btn btn-sm color-1 bd m-1 px-3" type="submit" value="Enter">
+        </div>
+      </form>
+    </div>
+    <div class="box px-4 px-md-5 m-4 mt-0">
+      {% for comment in comments %}
+        <div class="card text-center bd w-100">
+          <div class="card-header color-2">
+            <p class="card-title text-center m-0">
+              {{ comments|length }}
+              Comments
+            </p>
+          </div>
+          <div class="card-body bd-body text-start">
+            <div class="w-100 my-1">
+              <div class="row p-1 w-100">
+                <div class="col-2">
+                  <p class="my-1">{{ comment.user.username }}</p>
+                </div>
+                <div class="col-9">
+                  <p class="my-1">{{ comment.content }}</p>
+                </div>
+                <div class="col-1">
+                  {% if request.user.is_authenticated %}
+                    {% if request.user == comment.user %}
+                      <a class="btn btn-sm bd color-3" href="{% url 'reviews:comment_delete' review.pk comment.pk %}">
+                        <i class="bi bi-trash3-fill"></i>
+                      </a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer color-2"></div>
+        </div>
+        {% empty %}
+        <p class="text-center my-1 text-muted">Nothing Here...</p>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}
